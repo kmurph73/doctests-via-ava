@@ -1,7 +1,7 @@
 {
-  "name": "ts-ava-doctests",
+  "name": "doctests-con-ava",
   "version": "0.0.1",
-  "description": "doctests for ts",
+  "description": "doctests for javascript and typescript",
   "license": "MIT",
   "bin": "./dist/src/cli.js",
   "types": "./src/index.ts",

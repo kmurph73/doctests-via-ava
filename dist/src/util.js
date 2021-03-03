@@ -3,13 +3,28 @@
  *
  * @doctest
  * ```js
- * const fn = "export const isFn = () => true";
+ * let fn = "export const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn() { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn () { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn<T>(a: T) { return true }";
  * t.is(getFunctionName(fn), "isFn");
  * ```
  */
-export const getFunctionName = (line) => {
-    return line.split(" ")[2];
-};
+export function getFunctionName(line) {
+    let fn = line.split(" ")[2];
+    if (fn == null) {
+        throw new Error(`function name couldnt be found for: ${line}`);
+    }
+    if (/function/.test(line)) {
+        if (/\(/.test(fn)) {
+            fn = fn.split(/\(/)[0];
+        }
+    }
+    return fn;
+}
 /**
  * access an array, allows negative numbers
  *
@@ -49,5 +64,24 @@ export const then = (a, cb) => {
  */
 export const insertAt = (arr, index, item) => {
     arr.splice(index, 0, item);
+};
+/**
+ * remove null/undefined from an array
+ *
+ * @doctest
+ * ```js
+ * const arr = [1, undefined, 2, null, 3]
+ * t.deepEqual(compact(arr), [1,2,3])
+ * ```
+ */
+export const myCompact = (arr) => {
+    const nextArr = [];
+    for (let index = 0; index < arr.length; index++) {
+        const element = arr[index];
+        if (element != null) {
+            nextArr.push(element);
+        }
+    }
+    return nextArr;
 };
 //# sourceMappingURL=util.js.map

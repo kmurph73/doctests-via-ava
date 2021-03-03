@@ -1,7 +1,7 @@
 import { GroupState } from "./types.js";
 import { getFunctionName } from "./util.js";
 const doctestRegex = /\s*\*\s@doctests?/;
-const fnStartRegex = /^export const/;
+const fnRegex = /^export (const|function)/;
 const jsTickRegex = /```js$/;
 const jsTickEndRegex = /```$/;
 export const findGroups = (lines, fileName) => {
@@ -20,7 +20,7 @@ export const findGroups = (lines, fileName) => {
                 currentGroup.testStartEndLines[1] =
                     index - currentGroup.startingLine - 1;
             }
-            else if (fnStartRegex.test(line)) {
+            else if (fnRegex.test(line)) {
                 if (!GroupState.WithinCode) {
                     throw new Error("should be WithinCode at this point");
                 }

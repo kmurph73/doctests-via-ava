@@ -1,5 +1,5 @@
 import test from "ava";
-import { testFiles } from "../src/testFiles.js";
+import { createDoctests } from "../src/createDoctests.js";
 
 test("doctesting, all pass", (t) => {
   // const base = "./test_files";
@@ -8,7 +8,7 @@ test("doctesting, all pass", (t) => {
   // const groups = parseFiles(files);
   // writeTests(groups);
 
-  testFiles(process.cwd() + "/test_files");
+  createDoctests(process.cwd() + "/test_files");
 
   t.pass();
 });
