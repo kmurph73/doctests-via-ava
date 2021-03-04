@@ -5,7 +5,7 @@ test("doctesting, all pass", (t) => {
     // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
     // const groups = parseFiles(files);
     // writeTests(groups);
-    createDoctests(process.cwd() + "/test_files");
+    createDoctests("./dist/test_files");
     t.pass();
 });
 //# sourceMappingURL=test.js.map

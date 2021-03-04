@@ -99,4 +99,70 @@ export const arrAt = (arr, index) => {
         return arr[arr.length + index];
     }
 };
+/**
+ * shallow equal comparison
+ *
+ * @doctest
+ * ```js
+ * t.true(shallowEqual({a: 1}, {a: 1}))
+ * t.false(shallowEqual({a: 2}, {a: 1}))
+ * t.false(shallowEqual({a: 1, b: 2}, {a: 1}))
+ * ```
+ */
+export function shallowEqual(a, b) {
+    const keys1 = Object.keys(a);
+    const keys2 = Object.keys(b);
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+    for (const key of keys1) {
+        if (a[key] !== b[key]) {
+            return false;
+        }
+    }
+    return true;
+}
+/**
+ * check if matches `{ errors: [] }` format
+ *
+ * @doctest
+ * ```js
+ * t.true(isErrorResponse({errors: ['asdf']}))
+ * t.false(isErrorResponse({error: ['asdf']}))
+ * t.false(isErrorResponse(null))
+ * ```
+ */
+export function isErrorResponse(json) {
+    return json != null && json.errors !== undefined;
+}
+/**
+ * gets function name
+ *
+ * @doctest
+ * ```js
+ * let fn = "export const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn() { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn () { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn<T>(a: T) { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * ```
+ */
+export function getFunctionName(line) {
+    let fn = line.split(" ")[2];
+    if (fn == null) {
+        throw new Error(`function name couldnt be found for: ${line}`);
+    }
+    if (/function/.test(line)) {
+        if (/\</.test(fn)) {
+            fn = fn.split("<")[0];
+        }
+        else if (/\(/.test(fn)) {
+            fn = fn.split("(")[0];
+        }
+    }
+    return fn;
+}
 //# sourceMappingURL=easyTest.js.map

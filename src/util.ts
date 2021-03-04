@@ -20,8 +20,10 @@ export function getFunctionName(line: string): string {
   }
 
   if (/function/.test(line)) {
-    if (/\(/.test(fn)) {
-      fn = fn.split(/\(/)[0]!;
+    if (/\</.test(fn)) {
+      fn = fn.split("<")[0]!;
+    } else if (/\(/.test(fn)) {
+      fn = fn.split("(")[0]!;
     }
   }
 

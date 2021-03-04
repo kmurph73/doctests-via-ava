@@ -19,8 +19,11 @@ export function getFunctionName(line) {
         throw new Error(`function name couldnt be found for: ${line}`);
     }
     if (/function/.test(line)) {
-        if (/\(/.test(fn)) {
-            fn = fn.split(/\(/)[0];
+        if (/\</.test(fn)) {
+            fn = fn.split("<")[0];
+        }
+        else if (/\(/.test(fn)) {
+            fn = fn.split("(")[0];
         }
     }
     return fn;

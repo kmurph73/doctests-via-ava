@@ -8,7 +8,7 @@ test("doctesting, all pass", (t) => {
   // const groups = parseFiles(files);
   // writeTests(groups);
 
-  createDoctests(process.cwd() + "/test_files");
+  createDoctests("./dist/test_files");
 
   t.pass();
 });

@@ -1,6 +1,6 @@
 import fs from "fs";
 import { CodeGroup } from "./types.js";
-import { arrAt, insertAt, then } from "./util.js";
+import { arrAt } from "./util.js";
 
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
@@ -27,12 +27,6 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   const fnsToImport: string[] = [];
   const allLines: string[] = [];
 
-  const importName = then(fullFileName, (file) => {
-    const arr = file.split("/");
-    insertAt(arr, 1, "dist");
-    return arr.join("/").replace(/\.ts$/, ".js");
-  });
-
   for (let index = 0; index < groups.length; index++) {
     const group = groups[index]!;
     const [start, end] = group.testStartEndLines!;
@@ -55,7 +49,7 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   }
 
   const imports = fnsToImport.join(",");
-  const importLine = `import test from "ava";\nimport { ${imports} } from ".${importName}";`;
+  const importLine = `import test from "ava";\nimport { ${imports} } from ".${fullFileName}";`;
 
   const contents = importLine + "\n" + allLines.join("\n");
 
@@ -73,7 +67,7 @@ export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
 
     const fileContents = createLines(fullFileName, groups);
     let file = arrAt(fullFileName.split("/"), -1)!;
-    file = file.replace(/\.ts$/, ".test.js");
+    file = file.replace(/\.js$/, ".test.js");
     fs.writeFileSync(dir + `/${file}`, fileContents);
   }
 };

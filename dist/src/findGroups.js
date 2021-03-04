@@ -26,7 +26,8 @@ export const findGroups = (lines, fileName) => {
                 }
                 groups.push(currentGroup);
                 currentGroup.state = GroupState.Donezo;
-                currentGroup.functionName = getFunctionName(line);
+                const fn = getFunctionName(line);
+                currentGroup.functionName = fn;
                 currentGroup = null;
             }
         }

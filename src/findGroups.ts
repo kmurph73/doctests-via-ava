@@ -31,7 +31,9 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
 
         groups.push(currentGroup);
         currentGroup.state = GroupState.Donezo;
-        currentGroup.functionName = getFunctionName(line);
+        const fn = getFunctionName(line);
+
+        currentGroup.functionName = fn;
         currentGroup = null;
       }
     } else if (doctestRegex.test(line)) {

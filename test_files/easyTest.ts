@@ -1,3 +1,10 @@
+type ErrorResponse = {
+  errors: string[];
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PlainObject = Record<string, any>;
+
 /**
  * @doctests
  * ```js
@@ -107,3 +114,78 @@ export const arrAt = <T>(arr: T[], index: number): T | undefined => {
     return arr[arr.length + index];
   }
 };
+
+/**
+ * shallow equal comparison
+ *
+ * @doctest
+ * ```js
+ * t.true(shallowEqual({a: 1}, {a: 1}))
+ * t.false(shallowEqual({a: 2}, {a: 1}))
+ * t.false(shallowEqual({a: 1, b: 2}, {a: 1}))
+ * ```
+ */
+export function shallowEqual(a: PlainObject, b: PlainObject): boolean {
+  const keys1 = Object.keys(a);
+  const keys2 = Object.keys(b);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (const key of keys1) {
+    if (a[key] !== b[key]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * check if matches `{ errors: [] }` format
+ *
+ * @doctest
+ * ```js
+ * t.true(isErrorResponse({errors: ['asdf']}))
+ * t.false(isErrorResponse({error: ['asdf']}))
+ * t.false(isErrorResponse(null))
+ * ```
+ */
+export function isErrorResponse<T>(
+  json: T | ErrorResponse | null | undefined
+): json is ErrorResponse {
+  return json != null && (json as ErrorResponse).errors !== undefined;
+}
+
+/**
+ * gets function name
+ *
+ * @doctest
+ * ```js
+ * let fn = "export const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn() { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn () { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * fn = "export function isFn<T>(a: T) { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ * ```
+ */
+export function getFunctionName(line: string): string {
+  let fn = line.split(" ")[2];
+  if (fn == null) {
+    throw new Error(`function name couldnt be found for: ${line}`);
+  }
+
+  if (/function/.test(line)) {
+    if (/\</.test(fn)) {
+      fn = fn.split("<")[0]!;
+    } else if (/\(/.test(fn)) {
+      fn = fn.split("(")[0]!;
+    }
+  }
+
+  return fn;
+}
