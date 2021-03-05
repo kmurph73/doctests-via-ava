@@ -22,3 +22,7 @@ export type Test = {
   loc: number;
   passed: boolean;
 };
+
+export type Opts = {
+  ts: boolean;
+};
