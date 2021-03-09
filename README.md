@@ -1,11 +1,11 @@
 # doctests-con-ava
 doctests (via [ava](https://github.com/avajs/ava)) for javascript
 
-### installing
+### Installing
 
 `npm install doctests-con-ava` or `yarn add doctests-con-ava`
 
-### usage
+### Usage
 
 Write your comments in normal JS Doc format, but instead of using `@example` use `@doctest` or `@doctests` (either/or), followed by a js code block, EG:
 
@@ -32,3 +32,7 @@ Then add a script in your `package.json`:
  ```
 
 Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them.  It's up to you whether to add `./doctests` to your `.gitignore` or not.
+
+### TypeScript
+
+If you're compiling your TS manually, simply point the `doctests-con-ava` CLI command at TS's `outDir` (see above).  If you're using something like create-react-app or ts-node that's compiling your TS for you, support for that is in the works, but not currently available.
