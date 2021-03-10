@@ -1,3 +1,5 @@
+import path from "path";
+
 /**
  * gets function name
  *
@@ -93,4 +95,19 @@ export const myCompact = <T>(arr: Array<T | null | undefined>): Array<T> => {
   }
 
   return nextArr;
+};
+
+export const getRelativeDepth = (baseDir: string, filePath: string): number => {
+  const baseLength = path.normalize(baseDir).split("/").length;
+  const fileLength = path.normalize(filePath).split("/").length;
+
+  return fileLength - baseLength;
+};
+
+export const removeBaseDir = (baseDir: string, filePath: string): string => {
+  const normalBase = path.normalize(baseDir);
+  const normalFile = path.join(...filePath.split(path.sep));
+  const regexp = new RegExp(`^${normalBase}/`);
+
+  return normalFile.replace(regexp, "");
 };

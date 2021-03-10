@@ -1,9 +1,10 @@
 import fs from "fs";
+import path from "path";
 import { CodeGroup } from "./types.js";
-import { arrAt } from "./util.js";
+import { getRelativeDepth, removeBaseDir } from "./util.js";
 
 const cwd = process.cwd();
-const dir = cwd + "/doctests";
+const doctestDir = cwd + "/doctests";
 
 const groupGroups = (
   groups: CodeGroup[]
@@ -23,9 +24,15 @@ const groupGroups = (
   return obj;
 };
 
-const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
+const createLines = (
+  fullFileName: string,
+  groups: CodeGroup[],
+  baseDir: string
+): string => {
   const fnsToImport: string[] = [];
   const allLines: string[] = [];
+  const depth = getRelativeDepth(baseDir, fullFileName);
+  const backDots = Array(depth).fill("..").join("/");
 
   for (let index = 0; index < groups.length; index++) {
     const group = groups[index]!;
@@ -49,25 +56,53 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   }
 
   const imports = fnsToImport.join(",");
-  const importLine = `import test from "ava";\nimport { ${imports} } from ".${fullFileName}";`;
+  const importLine = `import test from "ava";\nimport { ${imports} } from "${backDots}/${fullFileName}";`;
 
   const contents = importLine + "\n" + allLines.join("\n");
+
+  debugger;
 
   return contents;
 };
 
-export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
+export const writeTests = async (
+  allGroups: CodeGroup[],
+  baseDir: string
+): Promise<void> => {
   const grouped = groupGroups(allGroups);
 
-  fs.rmSync(dir, { recursive: true, force: true });
-  fs.mkdirSync(dir);
+  fs.rmSync(doctestDir, { recursive: true, force: true });
+  fs.mkdirSync(doctestDir);
 
-  for (const fullFileName in grouped) {
-    const groups = grouped[fullFileName]!;
+  console.log("writeTests");
 
-    const fileContents = createLines(fullFileName, groups);
-    let file = arrAt(fullFileName.split("/"), -1)!;
-    file = file.replace(/\.js$/, ".test.js");
-    fs.writeFileSync(dir + `/${file}`, fileContents);
+  for (const fullFilePath in grouped) {
+    const groups = grouped[fullFilePath]!;
+
+    console.log("ummm");
+
+    debugger;
+
+    const fileContents = createLines(fullFilePath, groups, baseDir);
+    const parts = path.parse(fullFilePath);
+    const fileName = parts.name + ".test.js";
+
+    const realPath = removeBaseDir(baseDir, fullFilePath);
+
+    console.log("where");
+
+    const realParts = path.parse(realPath);
+    const realDir = path.join(doctestDir, realParts.dir);
+
+    console.log("wtf");
+    if (realDir.length > 0 && !fs.existsSync(realDir)) {
+      fs.mkdirSync(realDir, { recursive: true });
+    }
+
+    const finalPath = path.join(realDir, fileName);
+
+    console.log("finalPath: ", finalPath);
+
+    fs.writeFileSync(finalPath, fileContents);
   }
 };

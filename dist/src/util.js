@@ -1,3 +1,4 @@
+import path from "path";
 /**
  * gets function name
  *
@@ -86,5 +87,16 @@ export const myCompact = (arr) => {
         }
     }
     return nextArr;
+};
+export const getRelativeDepth = (baseDir, filePath) => {
+    const baseLength = path.normalize(baseDir).split("/").length;
+    const fileLength = path.normalize(filePath).split("/").length;
+    return fileLength - baseLength;
+};
+export const removeBaseDir = (baseDir, filePath) => {
+    const normalBase = path.normalize(baseDir);
+    const normalFile = path.join(...filePath.split(path.sep));
+    const regexp = new RegExp(`^${normalBase}/`);
+    return normalFile.replace(regexp, "");
 };
 //# sourceMappingURL=util.js.map

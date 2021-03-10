@@ -6,6 +6,8 @@ type ErrorResponse = {
 type PlainObject = Record<string, any>;
 
 /**
+ * sums two numbers
+ *
  * @doctests
  * ```js
  * t.is(sum(1, 2), 3)

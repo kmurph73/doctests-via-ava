@@ -11,7 +11,7 @@
     "src"
   ],
   "type": "module",
-  "dependencies": {
+  "devDependencies": {
     "@types/eslint": "^7.2.6",
     "@types/node": "^14.14.31",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
@@ -23,11 +23,17 @@
   },
   "scripts": {
     "test": "ava test ./dist/test/test.js",
-    "dt": "ava test ./doctests/**/*.js",
+    "dt": "ava ./doctests/**/*.test.js",
     "doctest": "ava test ./doctests/*.js",
     "debug": "ava debug ./dist/test/test.js",
     "brk": "ava debug --break ./dist/test/test.js",
     "build": "rimraf dist && tsc",
     "go": "ava test ./dist/test/test.js && ava test ./doctests/**/*.js"
+  },
+  "ava": {
+    "files": ["./doctests/**/*.js", "./doctests/*.js"]
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.5"
   }
 }

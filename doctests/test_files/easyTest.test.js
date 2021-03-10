@@ -1,5 +1,5 @@
 import test from "ava";
-import { sum,concat,isPresent,mutatingConcat,getDiff,pipe,arrAt,shallowEqual,isErrorResponse,getFunctionName } from "../dist/test_files/easyTest.js";
+import { sum,concat,isPresent,mutatingConcat,getDiff,pipe,arrAt,shallowEqual,isErrorResponse,getFunctionName } from "../../dist/test_files/easyTest.js";
 
 test("test sum", (t) => {
   t.is(sum(1, 2), 3);

@@ -168,3 +168,4 @@ export function getFunctionName(line) {
     return fn;
 }
 //# sourceMappingURL=easyTest.js.map
+//# sourceMappingURL=easyTest.js.map
