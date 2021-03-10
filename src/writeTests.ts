@@ -49,7 +49,7 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   }
 
   const imports = fnsToImport.join(",");
-  const importLine = `import test from "ava";\nimport { ${imports} } from ".${fullFileName}";`;
+  const importLine = `import test from "ava";\nimport { ${imports} } from "../${fullFileName}";`;
 
   const contents = importLine + "\n" + allLines.join("\n");
 
