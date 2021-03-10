@@ -37,8 +37,6 @@ _All_ this lib does is transform your doctests into regular ava tests.  As such,
 
 For example, the above `sum` function would compile down to the ava test of:
 
-This will compile to an ava test that looks like:
-
 ```js
 test("test sum", (t) => {
   t.is(sum(1, 2), 3);
