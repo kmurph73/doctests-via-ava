@@ -27,7 +27,7 @@
     "doctest": "ava test ./doctests/*.js",
     "debug": "ava debug ./dist/test/test.js",
     "brk": "ava debug --break ./dist/test/test.js",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && chmod +x ./dist/src/cli.js",
     "go": "ava test ./dist/test/test.js && ava test ./doctests/**/*.js"
   }
 }
