@@ -8,7 +8,7 @@ doctests (via [ava](https://github.com/avajs/ava)) for javascript
 
 ### Usage
 
-Write your comments in normal JS Doc format, but instead of using `@example` use `@doctest` or `@doctests` (either/or), followed by a JS code block, EG:
+Write your comments in normal JS Doc format, but instead of using `@example` use `@doctest` or `@doctests` (either/or), followed by a JS code block of your ava test, EG:
 
 ````typescript
 /**
