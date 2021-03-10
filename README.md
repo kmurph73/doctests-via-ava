@@ -27,11 +27,13 @@ export const sum = (a: number, b: number): number => {
 Then add a script in your `package.json`:
 ```json
   "scripts": {
-    "doctest": "doctests-con-ava './dist/src' && ava test ./doctests/**/*.js"
+    "doctest": "doctests-con-ava ./dist/src && ava test ./doctests/*.js"
    }
  ```
 
-Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them.  It's up to you whether to add `./doctests` to your `.gitignore` or not.
+Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them.  Up to you whether to add `doctests` to `.gitignore` or not.
+
+_All_ this lib does is transform your doctests into regular ava tests.
 
 ### TypeScript
 
