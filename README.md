@@ -35,7 +35,7 @@ Next, add a script in your `package.json`:
 
 Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them. Up to you whether to add `doctests` to `.gitignore` or not.
 
-_All_ this lib does is transform your doctests into regular ava tests. As such, it can only doctest exported functions (since it needs to import them from the original source).
+_All_ this lib does is transform your doctests into regular ava tests. As such, it can only doctest exported functions (since it needs to import them from the original source).  It's also your responsibility to install ava.
 
 For example, the above `sum` function would compile down to the ava test of:
 
