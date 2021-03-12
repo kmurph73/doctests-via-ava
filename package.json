@@ -1,6 +1,6 @@
 {
   "name": "doctests-via-ava",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "doctests for javascript and typescript",
   "license": "MIT",
   "bin": "./dist/src/cli.js",
@@ -23,11 +23,11 @@
   },
   "scripts": {
     "test": "ava test ./dist/test/test.js",
-    "dt": "ava test ./doctests/**/*.js",
+    "dt": "ava test ./doctests/*.js",
     "doctest": "ava test ./doctests/*.js",
     "debug": "ava debug ./dist/test/test.js",
     "brk": "ava debug --break ./dist/test/test.js",
     "build": "rimraf dist && tsc && chmod +x ./dist/src/cli.js",
-    "go": "ava test ./dist/test/test.js && ava test ./doctests/**/*.js"
+    "go": "ava test ./dist/test/test.js && ava test ./doctests/*.js"
   }
 }

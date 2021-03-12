@@ -24,10 +24,7 @@ const createLines = (fullFileName, groups) => {
         const [start, end] = group.testStartEndLines;
         let lines = group.lines.slice(start, end + 1).map((l) => `  ${l}`);
         lines = lines.map((l) => {
-            let line = l.trim().replace(/^\*\s?/, "");
-            if (line.length && !line.endsWith(";")) {
-                line = line + ";";
-            }
+            const line = l.trim().replace(/^\*\s?/, "");
             return `  ${line}`;
         });
         let test = `\ntest("test ${group.functionName}", (t) => {\n`;

@@ -189,3 +189,32 @@ export function getFunctionName(line: string): string {
 
   return fn;
 }
+
+/**
+ * throws error if arrays not eq
+ *
+ * @doctest
+ * ```js
+ * t.true(assertArraysEq([1,2,3], [1,2,3]))
+ * try {
+ *   assertArraysEq([1,2,4], [1,2,3])
+ *   t.fail()
+ * } catch(e) {
+ *   t.pass()
+ *   console.log('error: ', e)
+ * }
+ * ```
+ */
+export const assertArraysEq = <T>(arr1: T[], arr2: T[]): boolean => {
+  if (arr1.length !== arr2.length) {
+    throw new Error("arrays not eq!");
+  }
+
+  for (let index = 0; index < arr1.length; index++) {
+    if (arr1[index]! !== arr2[index]) {
+      throw new Error(`arrays not eq: ${arr1[index]} !== ${arr2[index]}`);
+    }
+  }
+
+  return true;
+};
