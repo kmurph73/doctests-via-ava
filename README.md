@@ -4,7 +4,7 @@ doctests (via [ava](https://github.com/avajs/ava)) for javascript
 
 ### Installing
 
-`npm install doctests-via-ava` or `yarn add doctests-via-ava`
+`npm install doctests-via-ava -D` or `yarn add doctests-via-ava -D`
 
 ### Usage
 
