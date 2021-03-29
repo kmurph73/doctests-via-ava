@@ -1,6 +1,6 @@
 import fs from "fs";
-import { CodeGroup } from "./types.js";
-import { arrAt } from "./util.js";
+import { CodeGroup, DoctestOptions } from "./types.js";
+import { arrAt, then } from "./util.js";
 
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
@@ -37,7 +37,7 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
       return `  ${line}`;
     });
 
-    let test = `\ntest("test ${group.functionName}", (t) => {\n`;
+    let test = `\ntest("${group.functionName}", (t) => {\n`;
     test += lines.join("\n");
     test += "\n});";
 
@@ -46,14 +46,20 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   }
 
   const imports = fnsToImport.join(",");
-  const importLine = `import test from "ava";\nimport { ${imports} } from "../${fullFileName}";`;
+  const importLine = `import test from "ava";\nimport { ${imports} } from "../${fullFileName.replace(
+    /\.ts$/,
+    ".js"
+  )}";`;
 
   const contents = importLine + "\n" + allLines.join("\n");
 
   return contents;
 };
 
-export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
+export const writeTests = async (
+  allGroups: CodeGroup[],
+  opts?: DoctestOptions
+): Promise<void> => {
   const grouped = groupGroups(allGroups);
 
   fs.rmSync(dir, { recursive: true, force: true });
@@ -64,7 +70,11 @@ export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
 
     const fileContents = createLines(fullFileName, groups);
     let file = arrAt(fullFileName.split("/"), -1)!;
-    file = file.replace(/\.js$/, ".test.js");
+    const ending = then(opts?.ts, (ts) =>
+      ts === true ? ".test.ts" : ".test.js"
+    );
+
+    file = file.replace(/\.(js|ts)$/, ending);
     fs.writeFileSync(dir + `/${file}`, fileContents);
   }
 };
