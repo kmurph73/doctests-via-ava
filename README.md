@@ -1,6 +1,6 @@
 # doctests-via-ava
 
-doctests (via [ava](https://github.com/avajs/ava)) for javascript
+doctests (via [ava](https://github.com/avajs/ava)) for javascript and typescript
 
 ### Installing
 
