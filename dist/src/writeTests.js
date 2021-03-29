@@ -1,5 +1,5 @@
 import fs from "fs";
-import { arrAt, then } from "./util.js";
+import { arrAt } from "./util.js";
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
 const groupGroups = (groups) => {
@@ -46,7 +46,7 @@ export const writeTests = async (allGroups, opts) => {
         const groups = grouped[fullFileName];
         const fileContents = createLines(fullFileName, groups);
         let file = arrAt(fullFileName.split("/"), -1);
-        const ending = then(opts?.ts, (ts) => ts === true ? ".test.ts" : ".test.js");
+        const ending = opts?.ts === true ? ".test.ts" : ".test.js";
         file = file.replace(/\.(js|ts)$/, ending);
         fs.writeFileSync(dir + `/${file}`, fileContents);
     }
