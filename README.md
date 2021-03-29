@@ -43,7 +43,7 @@ For example, the above `sum` function would compile down to the ava test of:
 import test from "ava";
 import { sum } from "../dist/src/sum.js";
 
-test("test sum", (t) => {
+test("sum", (t) => {
   t.is(sum(1, 2), 3);
   t.is(sum(4, 4), 8);
 });
