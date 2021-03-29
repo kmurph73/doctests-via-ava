@@ -57,7 +57,7 @@ If you're using something like create-react-app or ts-node that's compiling your
 
 Then, pass in the `--ts` flag to the `doctests-via-ava` cli command:
 
-    "dt": "doctests-via-ava ./src --ts && ava test ./doctests/*.ts"
+`doctests-via-ava ./src --ts && ava test ./doctests/*.ts`
 
 ### Stage of development
 
