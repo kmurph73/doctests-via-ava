@@ -35,7 +35,7 @@ Next, add a script in your `package.json`:
 
 Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them. Up to you whether to add `doctests` to `.gitignore` or not.
 
-_All_ this lib does is transform your doctests into regular ava tests. As such, it can only doctest exported functions (since it needs to import them from the original source).  It's also your responsibility to install ava.
+_All_ this lib does is transform your doctests into regular ava tests. As such, it can only doctest exported functions (since it needs to import them from the original source). It's also your responsibility to install ava.
 
 For example, the above `sum` function would compile down to the ava test of:
 
@@ -51,7 +51,13 @@ test("test sum", (t) => {
 
 ### TypeScript
 
-If you're compiling your TS manually, simply point the `doctests-via-ava` CLI command at TS's `outDir` (see above). If you're using something like create-react-app or ts-node that's compiling your TS for you, support for that is in the works, but not currently available.
+If you're compiling your TS manually, simply point the `doctests-via-ava` CLI command at TS's `outDir` (see above).
+
+If you're using something like create-react-app or ts-node that's compiling your TS for you, first follow [AVA's instructions for setting up ts-node](https://github.com/avajs/ava/blob/main/docs/recipes/typescript.md#enabling-avas-support-for-typescript-test-files).
+
+Then, pass in the `--ts` flag to the `doctests-via-ava` cli command:
+
+`doctests-via-ava ./src --ts && ava test ./doctests/*.ts`
 
 ### Stage of development
 
