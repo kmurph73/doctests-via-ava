@@ -6,6 +6,10 @@ doctests (via [ava](https://github.com/avajs/ava)) for javascript and typescript
 
 `npm install doctests-via-ava -D` or `yarn add doctests-via-ava -D`
 
+make sure you have ava installed as well:
+
+`npm install ava -D` or `yarn add ava -D`
+
 ### Usage
 
 Write your comments in normal JS Doc format, but instead of using `@example` use `@doctest` or `@doctests` (either/or), followed by a JS code block of your ava test, EG:
