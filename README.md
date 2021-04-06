@@ -55,13 +55,15 @@ test("sum", (t) => {
 
 ### TypeScript
 
-If you're compiling your TS manually, simply point the `doctests-via-ava` CLI command at TS's `outDir` (see above).
+If you're compiling your TS yourself, simply point the `doctests-via-ava` CLI command at TS's `outDir` (see above).
 
-If you're using something like create-react-app or ts-node that's compiling your TS for you, first follow [AVA's instructions for setting up ts-node](https://github.com/avajs/ava/blob/main/docs/recipes/typescript.md#enabling-avas-support-for-typescript-test-files).
+If you're using something like create-react-app that's compiling your TS for you, first follow [AVA's instructions for setting up ts-node](https://github.com/avajs/ava/blob/main/docs/recipes/typescript.md#enabling-avas-support-for-typescript-test-files).
 
 Then, pass in the `--ts` flag to the `doctests-via-ava` cli command:
 
 `doctests-via-ava ./src --ts && ava test ./doctests/*.ts`
+
+One gotcha is that [ts-node](https://github.com/TypeStrong/ts-node) wants you to add a `.js` ending to your imports, eg `import sortBy from 'lodash/sortBy.js';` - which CRA doesn't require (but is harmless to add), so you might see a `ERR_MODULE_NOT_FOUND` error if missing that in your files with doctests.
 
 ### Stage of development
 
