@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "doctests for javascript and typescript",
   "license": "MIT",
+  "homepage": "https://github.com/kmurph73/doctests-via-ava",
   "bin": "./dist/src/cli.js",
   "types": "./src/index.ts",
   "main": "./dist/src/index.js",
