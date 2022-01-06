@@ -1,4 +1,4 @@
-[Ava 4](https://github.com/avajs/ava/releases/tag/v4.0.0) broke this lib :(
+[Ava 4](https://github.com/avajs/ava/releases/tag/v4.0.0) broke this lib :( - but still works with Ava 3.
 
 # doctests-via-ava
 
