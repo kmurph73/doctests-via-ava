@@ -53,6 +53,10 @@ test("sum", (t) => {
 });
 ```
 
+### test.only
+
+Use `@doctest_only` or `@doctests_only` to use [Ava's `test.only`](https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#running-specific-tests) for a specific test group.  Remember to remove it before committing tho!
+
 ### TypeScript
 
 If you're compiling your TS yourself, simply point the `doctests-via-ava` CLI command at TS's `outDir` (see above).
@@ -68,6 +72,8 @@ One gotcha is that [ts-node](https://github.com/TypeStrong/ts-node) wants you to
 ### Stage of development
 
 This lib is very new, probably buggy, and only really handles the happy path. This will improve over time.
+
+NPM link: https://www.npmjs.com/package/doctests-via-ava
 
 ### License
 
