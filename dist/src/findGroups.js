@@ -1,6 +1,7 @@
 import { GroupState } from "./types.js";
 import { getFunctionName } from "./util.js";
 const doctestRegex = /\s*\*\s@doctests?/;
+const doctestOnlyRegex = /@doctests?\.only/;
 const fnRegex = /^export (const|function)/;
 const jsTickRegex = /```js$/;
 const jsTickEndRegex = /```$/;
@@ -39,7 +40,7 @@ export const findGroups = (lines, fileName) => {
                 tests: [],
                 lines: [line],
                 state: GroupState.Begun,
-                failedCount: 0,
+                only: doctestOnlyRegex.test(line),
             };
         }
     }

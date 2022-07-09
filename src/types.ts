@@ -15,7 +15,7 @@ export type CodeGroup = {
   lines: string[];
   tests: Test[];
   state: GroupState;
-  failedCount: number;
+  only: boolean;
 };
 
 export type Test = {

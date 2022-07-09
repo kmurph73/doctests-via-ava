@@ -27,7 +27,8 @@ const createLines = (fullFileName, groups) => {
             const line = l.trim().replace(/^\*\s?/, "");
             return `  ${line}`;
         });
-        let test = `\ntest("${group.functionName}", (t) => {\n`;
+        let test = group.only ? "test.only" : "test";
+        test = `\n${test}("${group.functionName}", (t) => {\n`;
         test += lines.join("\n");
         test += "\n});";
         allLines.push(test);
