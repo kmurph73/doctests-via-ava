@@ -1,7 +1,7 @@
 import { GroupState } from "./types.js";
 import { getFunctionName } from "./util.js";
 const doctestRegex = /\s*\*\s@doctests?/;
-const doctestOnlyRegex = /@doctests?\.only/;
+const doctestOnlyRegex = /@doctests?_only/;
 const fnRegex = /^export (const|function)/;
 const jsTickRegex = /```js$/;
 const jsTickEndRegex = /```$/;

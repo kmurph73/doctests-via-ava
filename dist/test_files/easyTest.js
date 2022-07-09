@@ -11,7 +11,7 @@ export const sum = (a, b) => {
 /**
  * concats two strings
  *
- * @doctest.only
+ * @doctest_only
  * ```js
  *  t.is(concat("a", "b"), "ab")
  * ```

@@ -1,12 +1,12 @@
 {
   "name": "doctests-via-ava",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "doctests for javascript and typescript",
   "license": "MIT",
   "homepage": "https://github.com/kmurph73/doctests-via-ava",
   "bin": "./dist/src/cli.js",
-  "types": "./src/index.ts",
-  "main": "./dist/src/index.js",
+  "types": "./src/createDoctests.ts",
+  "main": "./dist/src/createDoctests.js",
   "files": [
     "dist",
     "src"
@@ -17,12 +17,12 @@
   },
   "scripts": {
     "test": "ava test ./dist/test/test.js",
-    "dt": "ava test ./doctests/*.js",
+    "dt": "ava ./doctests/*.js",
     "doctest": "ava test ./doctests/*.js",
     "debug": "ava debug ./dist/test/test.js",
     "brk": "ava debug --break ./dist/test/test.js",
     "build": "rimraf dist && tsc && chmod +x ./dist/src/cli.js",
-    "go": "ava test ./dist/test/test.js && ava test ./doctests/*.js"
+    "go": "yarn test && yarn dt"
   },
   "devDependencies": {
     "@types/node": "^18.0.3",

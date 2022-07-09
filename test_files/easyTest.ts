@@ -19,7 +19,7 @@ export const sum = (a: number, b: number): number => {
 /**
  * concats two strings
  *
- * @doctest.only
+ * @doctest_only
  * ```js
  *  t.is(concat("a", "b"), "ab")
  * ```
