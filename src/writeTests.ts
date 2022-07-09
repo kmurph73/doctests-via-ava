@@ -37,7 +37,8 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
       return `  ${line}`;
     });
 
-    let test = `\ntest("${group.functionName}", (t) => {\n`;
+    let test = group.only ? "test.only" : "test";
+    test = `\n${test}("${group.functionName}", (t) => {\n`;
     test += lines.join("\n");
     test += "\n});";
 
