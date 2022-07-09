@@ -1,6 +1,6 @@
 {
   "name": "doctests-via-ava",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "doctests for javascript and typescript",
   "license": "MIT",
   "homepage": "https://github.com/kmurph73/doctests-via-ava",
