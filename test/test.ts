@@ -1,7 +1,7 @@
 import test from "ava";
 import { createDoctests } from "../src/createDoctests.js";
 
-test.only("doctesting js, all pass", async (t) => {
+test("doctesting js, all pass", async (t) => {
   // const base = "./test_files";
 
   // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
