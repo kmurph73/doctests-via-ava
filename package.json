@@ -1,6 +1,6 @@
 {
   "name": "doctests-via-ava",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "doctests for javascript and typescript",
   "license": "MIT",
   "homepage": "https://github.com/kmurph73/doctests-via-ava",
@@ -13,6 +13,7 @@
   ],
   "type": "module",
   "dependencies": {
+    "fast-glob": "^3.2.11",
     "rimraf": "^3.0.2"
   },
   "scripts": {
