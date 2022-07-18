@@ -4,6 +4,7 @@ import { getFunctionName } from "./util.js";
 const doctestRegex = /\s*\*\s@doctests?/;
 const doctestOnlyRegex = /@doctests?_only/;
 const fnRegex = /^export (const|function)/;
+const classRegex = /^export class/;
 const jsTickRegex = /```js$/;
 const jsTickEndRegex = /```$/;
 
@@ -26,6 +27,17 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
         currentGroup.testStartEndLines[1] =
           index - currentGroup.startingLine - 1;
       } else if (fnRegex.test(line)) {
+        if (!GroupState.WithinCode) {
+          throw new Error("should be WithinCode at this point");
+        }
+
+        groups.push(currentGroup);
+        currentGroup.state = GroupState.Donezo;
+        const fn = getFunctionName(line);
+
+        currentGroup.functionName = fn;
+        currentGroup = null;
+      } else if (classRegex.test(line)) {
         if (!GroupState.WithinCode) {
           throw new Error("should be WithinCode at this point");
         }

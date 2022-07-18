@@ -2,7 +2,7 @@ import fs from "fs";
 import { arrAt } from "./util.js";
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
-const groupGroups = (groups) => {
+const groupGroupsByFilename = (groups) => {
     const obj = {};
     for (let index = 0; index < groups.length; index++) {
         const group = groups[index];
@@ -27,8 +27,7 @@ const createLines = (fullFileName, groups) => {
             const line = l.trim().replace(/^\*\s?/, "");
             return `  ${line}`;
         });
-        let test = group.only ? "test.only" : "test";
-        test = `\n${test}("${group.functionName}", (t) => {\n`;
+        let test = `\ntest("${group.functionName}", (t) => {\n`;
         test += lines.join("\n");
         test += "\n});";
         allLines.push(test);
@@ -39,15 +38,17 @@ const createLines = (fullFileName, groups) => {
     const contents = importLine + "\n" + allLines.join("\n");
     return contents;
 };
-export const writeTests = async (allGroups, opts) => {
-    const grouped = groupGroups(allGroups);
+export const writeTests = async (allGroups) => {
+    const onlyGroups = allGroups.filter((g) => g.only);
+    const groups = onlyGroups.length ? onlyGroups : allGroups;
+    const grouped = groupGroupsByFilename(groups);
     fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir);
     for (const fullFileName in grouped) {
         const groups = grouped[fullFileName];
         const fileContents = createLines(fullFileName, groups);
         let file = arrAt(fullFileName.split("/"), -1);
-        const ending = opts?.ts === true ? ".test.ts" : ".test.js";
+        const ending = ".test.js";
         file = file.replace(/\.(js|ts)$/, ending);
         fs.writeFileSync(dir + `/${file}`, fileContents);
     }

@@ -7,9 +7,10 @@ export enum GroupState {
 export type CodeGroup = {
   fileName: string;
   functionName?: string;
+  className?: string;
   startingLine: number;
   testStartEndLines: [number | null, number | null];
-  functionStartIndex?: number;
+  functionOrClassStartIndex?: number;
   doctestStartIndex?: number;
   doctestEndIndex?: number;
   lines: string[];
@@ -21,8 +22,4 @@ export type CodeGroup = {
 export type Test = {
   loc: number;
   passed: boolean;
-};
-
-export type DoctestOptions = {
-  ts?: boolean;
 };
