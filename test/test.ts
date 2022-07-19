@@ -20,7 +20,7 @@ test("create doctests for ts files", async (t) => {
   // const groups = parseFiles(files);
   // writeTests(groups);
 
-  await createDoctests("./test_files");
+  await createDoctests("./test_files", { ts: true });
 
   t.pass();
 });

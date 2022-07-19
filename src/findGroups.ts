@@ -1,5 +1,5 @@
 import { CodeGroup, GroupState } from "./types.js";
-import { getFunctionName } from "./util.js";
+import { getClassName, getFunctionName } from "./util.js";
 
 const doctestRegex = /\s*\*\s@doctests?/;
 const doctestOnlyRegex = /@doctests?_only/;
@@ -44,9 +44,9 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
 
         groups.push(currentGroup);
         currentGroup.state = GroupState.Donezo;
-        const fn = getFunctionName(line);
+        const klass = getClassName(line);
 
-        currentGroup.functionName = fn;
+        currentGroup.className = klass;
         currentGroup = null;
       }
     } else if (doctestRegex.test(line)) {

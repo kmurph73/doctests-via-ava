@@ -23,3 +23,7 @@ export type Test = {
   loc: number;
   passed: boolean;
 };
+
+export type DoctestOptions = {
+  ts?: boolean;
+};

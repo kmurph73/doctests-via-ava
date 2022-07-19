@@ -1,5 +1,5 @@
 import fs from "fs";
-import { CodeGroup } from "./types.js";
+import { CodeGroup, DoctestOptions } from "./types.js";
 import { arrAt } from "./util.js";
 
 const cwd = process.cwd();
@@ -37,12 +37,21 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
       return `  ${line}`;
     });
 
-    let test = `\ntest("${group.functionName}", (t) => {\n`;
+    const name = group.functionName || group.className;
+    if (!name) {
+      throw new Error(
+        `function or class name should be here for group:\n${JSON.stringify(
+          group
+        )}`
+      );
+    }
+
+    let test = `\ntest("${name}", (t) => {\n`;
     test += lines.join("\n");
     test += "\n});";
 
     allLines.push(test);
-    fnsToImport.push(group.functionName!);
+    fnsToImport.push(name);
   }
 
   const imports = fnsToImport.join(",");
@@ -56,7 +65,10 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   return contents;
 };
 
-export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
+export const writeTests = async (
+  allGroups: CodeGroup[],
+  opts?: DoctestOptions
+): Promise<void> => {
   const onlyGroups = allGroups.filter((g) => g.only);
   const groups = onlyGroups.length ? onlyGroups : allGroups;
   const grouped = groupGroupsByFilename(groups);
@@ -69,7 +81,7 @@ export const writeTests = async (allGroups: CodeGroup[]): Promise<void> => {
 
     const fileContents = createLines(fullFileName, groups);
     let file = arrAt(fullFileName.split("/"), -1)!;
-    const ending = ".test.js";
+    const ending = opts?.ts === true ? ".test.ts" : ".test.js";
 
     file = file.replace(/\.(js|ts)$/, ending);
     fs.writeFileSync(dir + `/${file}`, fileContents);

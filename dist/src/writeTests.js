@@ -27,18 +27,22 @@ const createLines = (fullFileName, groups) => {
             const line = l.trim().replace(/^\*\s?/, "");
             return `  ${line}`;
         });
-        let test = `\ntest("${group.functionName}", (t) => {\n`;
+        const name = group.functionName || group.className;
+        if (!name) {
+            throw new Error(`function or class name should be here for group:\n${JSON.stringify(group)}`);
+        }
+        let test = `\ntest("${name}", (t) => {\n`;
         test += lines.join("\n");
         test += "\n});";
         allLines.push(test);
-        fnsToImport.push(group.functionName);
+        fnsToImport.push(name);
     }
     const imports = fnsToImport.join(",");
     const importLine = `import test from "ava";\nimport { ${imports} } from "../${fullFileName.replace(/\.ts$/, ".js")}";`;
     const contents = importLine + "\n" + allLines.join("\n");
     return contents;
 };
-export const writeTests = async (allGroups) => {
+export const writeTests = async (allGroups, opts) => {
     const onlyGroups = allGroups.filter((g) => g.only);
     const groups = onlyGroups.length ? onlyGroups : allGroups;
     const grouped = groupGroupsByFilename(groups);
@@ -48,7 +52,7 @@ export const writeTests = async (allGroups) => {
         const groups = grouped[fullFileName];
         const fileContents = createLines(fullFileName, groups);
         let file = arrAt(fullFileName.split("/"), -1);
-        const ending = ".test.js";
+        const ending = opts?.ts === true ? ".test.ts" : ".test.js";
         file = file.replace(/\.(js|ts)$/, ending);
         fs.writeFileSync(dir + `/${file}`, fileContents);
     }
