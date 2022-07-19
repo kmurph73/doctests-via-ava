@@ -53,7 +53,7 @@ test("sum", (t) => {
 });
 ```
 
-### test.only
+### @doctest_only
 
 Use `@doctest_only` or `@doctests_only` to only create/run a specific set of doctests.
 
