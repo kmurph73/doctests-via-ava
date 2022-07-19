@@ -55,7 +55,7 @@ test("sum", (t) => {
 
 ### test.only
 
-Use `@doctest_only` or `@doctests_only` to use [Ava's `test.only`](https://github.com/avajs/ava/blob/main/docs/01-writing-tests.md#running-specific-tests) for a specific test group.  Remember to remove it before committing tho!
+Use `@doctest_only` or `@doctests_only` to only create/run a specific set of doctests.
 
 ### TypeScript
 
