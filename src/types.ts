@@ -10,9 +10,6 @@ export type CodeGroup = {
   className?: string;
   startingLine: number;
   testStartEndLines: [number | null, number | null];
-  functionOrClassStartIndex?: number;
-  doctestStartIndex?: number;
-  doctestEndIndex?: number;
   lines: string[];
   tests: Test[];
   state: GroupState;
