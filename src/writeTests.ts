@@ -5,7 +5,7 @@ import { arrAt } from "./util.js";
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
 
-const groupGroups = (
+const groupGroupsByFilename = (
   groups: CodeGroup[]
 ): { [fileName: string]: CodeGroup[] } => {
   const obj: { [fileName: string]: CodeGroup[] } = {};
@@ -37,13 +37,21 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
       return `  ${line}`;
     });
 
-    let test = group.only ? "test.only" : "test";
-    test = `\n${test}("${group.functionName}", (t) => {\n`;
+    const name = group.functionName || group.className;
+    if (!name) {
+      throw new Error(
+        `function or class name should be here for group:\n${JSON.stringify(
+          group
+        )}`
+      );
+    }
+
+    let test = `\ntest("${name}", (t) => {\n`;
     test += lines.join("\n");
     test += "\n});";
 
     allLines.push(test);
-    fnsToImport.push(group.functionName!);
+    fnsToImport.push(name);
   }
 
   const imports = fnsToImport.join(",");
@@ -61,7 +69,9 @@ export const writeTests = async (
   allGroups: CodeGroup[],
   opts?: DoctestOptions
 ): Promise<void> => {
-  const grouped = groupGroups(allGroups);
+  const onlyGroups = allGroups.filter((g) => g.only);
+  const groups = onlyGroups.length ? onlyGroups : allGroups;
+  const grouped = groupGroupsByFilename(groups);
 
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir);

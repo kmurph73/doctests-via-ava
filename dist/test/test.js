@@ -1,6 +1,6 @@
 import test from "ava";
 import { createDoctests } from "../src/createDoctests.js";
-test("doctesting js, all pass", async (t) => {
+test.only("create doctests for js files", async (t) => {
     // const base = "./test_files";
     // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
     // const groups = parseFiles(files);
@@ -8,7 +8,7 @@ test("doctesting js, all pass", async (t) => {
     await createDoctests("./dist/test_files");
     t.pass();
 });
-test("doctesting ts, all pass", async (t) => {
+test("create doctests for ts files", async (t) => {
     // const base = "./test_files";
     // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
     // const groups = parseFiles(files);

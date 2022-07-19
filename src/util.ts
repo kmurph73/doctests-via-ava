@@ -31,6 +31,31 @@ export function getFunctionName(line: string): string {
 }
 
 /**
+ * gets class name
+ *
+ * @doctest
+ * ```js
+ * let klass = "export class RequiredMap {";
+ * t.is(getClassName(klass), "RequiredMap");
+ *
+ * klass = "export class RequiredMap<T> {";
+ * t.is(getClassName(klass), "RequiredMap");
+ * ```
+ */
+export function getClassName(line: string): string {
+  let klass = line.split(" ")[2];
+  if (klass == null) {
+    throw new Error(`class name couldnt be found for: ${line}`);
+  }
+
+  if (/\</.test(klass)) {
+    klass = klass.split("<")[0]!;
+  }
+
+  return klass;
+}
+
+/**
  * access an array, allows negative numbers
  *
  * @doctest
@@ -78,7 +103,7 @@ export const insertAt = <T>(arr: T[], index: number, item: T): void => {
  * @doctest
  * ```js
  * const arr = [1, undefined, 2, null, 3]
- * t.deepEqual(compact(arr), [1,2,3])
+ * t.deepEqual(myCompact(arr), [1,2,3])
  * ```
  */
 export const myCompact = <T>(arr: Array<T | null | undefined>): Array<T> => {

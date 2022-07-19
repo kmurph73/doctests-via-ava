@@ -14,7 +14,5 @@ if (dir == null || dir.trim() === "") {
     `a third argument was passed in of ${tsOpt}, which should be "--ts", or nothing`
   );
 } else {
-  const ts = tsOpt === "--ts";
-
-  createDoctests(dir, { ts });
+  createDoctests(dir);
 }

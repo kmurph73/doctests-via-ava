@@ -9,7 +9,6 @@ else if (tsOpt != null && tsOpt !== "--ts") {
     console.error(`a third argument was passed in of ${tsOpt}, which should be "--ts", or nothing`);
 }
 else {
-    const ts = tsOpt === "--ts";
-    createDoctests(dir, { ts });
+    createDoctests(dir);
 }
 //# sourceMappingURL=cli.js.map

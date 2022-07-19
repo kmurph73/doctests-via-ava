@@ -19,7 +19,7 @@ export const sum = (a: number, b: number): number => {
 /**
  * concats two strings
  *
- * @doctest_only
+ * @doctest
  * ```js
  *  t.is(concat("a", "b"), "ab")
  * ```
@@ -195,14 +195,14 @@ export function getFunctionName(line: string): string {
  *
  * @doctest
  * ```js
- * t.true(assertArraysEq([1,2,3], [1,2,3]))
- * try {
- *   assertArraysEq([1,2,4], [1,2,3])
- *   t.fail()
- * } catch(e) {
- *   t.pass()
- *   console.log('error: ', e)
- * }
+ * t.true(assertArraysEq([1,2,3], [1,2,3]));
+ *
+ * const error = t.throws(() => {
+ *   assertArraysEq([1,2,4], [1,2,3]);
+ * });
+ *
+ * t.is(error.message, "arrays not eq: 4 !== 3");
+ *
  * ```
  */
 export const assertArraysEq = <T>(arr1: T[], arr2: T[]): boolean => {
