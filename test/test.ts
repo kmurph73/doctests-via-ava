@@ -20,7 +20,18 @@ test("create doctests, convert to js", async (t) => {
   t.deepEqual(files, expectedFiles);
 });
 
-test.only("create doctests for ts files", async (t) => {
+test.only("test single file", async (t) => {
+  const glob = "./test_files/easyTest.ts";
+  await createDoctests(glob);
+
+  const files = await readDir("doctests");
+
+  const expectedFiles = ["easyTest.test.js"];
+
+  t.deepEqual(files, expectedFiles);
+});
+
+test("create doctests for ts files", async (t) => {
   const glob = "test_files/**/*.ts";
   await createDoctests(glob, { ts: true });
 
