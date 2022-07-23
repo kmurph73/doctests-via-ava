@@ -1,12 +1,9 @@
 import { parseFiles } from "./parseFiles.js";
 import { writeTests } from "./writeTests.js";
 import { myCompact } from "./util.js";
-import path from "path";
 import fg from "fast-glob";
-export const createDoctests = async (dir, opts) => {
-    const glob = "**/*.{js,ts}";
-    const fullGlob = path.join(dir, glob);
-    const files = await fg(fullGlob);
+export const createDoctests = async (glob, opts) => {
+    const files = await fg(glob);
     const groups = parseFiles(myCompact(files));
     writeTests(groups, opts);
 };

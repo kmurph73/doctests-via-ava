@@ -1,26 +1,36 @@
 import test from "ava";
+import fs from "fs";
+import util from "util";
+
 import { createDoctests } from "../src/createDoctests.js";
+const readDir = util.promisify(fs.readdir);
 
-test.only("create doctests for js files", async (t) => {
-  // const base = "./test_files";
+test("create doctests, convert to js", async (t) => {
+  const glob = "test_files/**/*.ts";
+  await createDoctests(glob);
 
-  // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
-  // const groups = parseFiles(files);
-  // writeTests(groups);
+  const files = await readDir("doctests");
 
-  await createDoctests("./dist/test_files");
+  const expectedFiles = [
+    "addThree.test.js",
+    "easyTest.test.js",
+    "testClass.test.js",
+  ];
 
-  t.pass();
+  t.deepEqual(files, expectedFiles);
 });
 
-test("create doctests for ts files", async (t) => {
-  // const base = "./test_files";
+test.only("create doctests for ts files", async (t) => {
+  const glob = "test_files/**/*.ts";
+  await createDoctests(glob, { ts: true });
 
-  // const files = fs.readdirSync(base).map((file) => `${base}/${file}`);
-  // const groups = parseFiles(files);
-  // writeTests(groups);
+  const files = await readDir("doctests");
 
-  await createDoctests("./test_files", { ts: true });
+  const expectedFiles = [
+    "addThree.test.ts",
+    "easyTest.test.ts",
+    "testClass.test.ts",
+  ];
 
-  t.pass();
+  t.deepEqual(files, expectedFiles);
 });
