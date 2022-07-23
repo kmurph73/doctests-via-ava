@@ -33,9 +33,11 @@ Next, add a script in your `package.json`:
 
 ```json
   "scripts": {
-    "doctest": "doctests-via-ava ./dist/src && ava test ./doctests/*.js"
+    "doctest": "doctests-via-ava ./dist/src/**/*.js && ava test ./doctests/*.js"
    }
 ```
+
+We utilize the excellent [fast-glob](https://github.com/mrmlnc/fast-glob) package to glob files.  What you pass into `doctests-via-ava` gets directly passed to fast-glob.
 
 Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them. Up to you whether to add `doctests` to `.gitignore` or not.
 
