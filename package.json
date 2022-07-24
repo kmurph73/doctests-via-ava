@@ -24,12 +24,12 @@
     "brk": "ava debug --break ./dist/test/test.js",
     "build": "rimraf dist && tsc && chmod +x ./dist/src/cli.js",
     "go": "yarn test && yarn dt",
-    "realdt": "doctests-via-ava what.js && ava test ./doctests/*.js"
+    "realdt": "doctests-via-ava ./dist/src/**/*.js && ava test ./doctests/*.js"
   },
   "devDependencies": {
     "@types/node": "^18.0.3",
     "ava": "^4.3.1",
-    "doctests-via-ava": "^0.0.9",
+    "doctests-via-ava": "^0.0.10",
     "typescript": "^4.7.4"
   }
 }

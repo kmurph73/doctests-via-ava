@@ -1,20 +1,31 @@
 /**
  * gets function name
  *
- * @doctest
+ * @doctest_only
  * ```js
+ * let fn = "const isFn = () => true";
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: false});
+ *
  * let fn = "export const isFn = () => true";
- * t.is(getFunctionName(fn), "isFn");
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ *
  * fn = "export function isFn() { return true }";
- * t.is(getFunctionName(fn), "isFn");
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ *
+ * fn = "function isFn() { return true }";
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: false});
+ *
  * fn = "export function isFn () { return true }";
- * t.is(getFunctionName(fn), "isFn");
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ *
  * fn = "export function isFn<T>(a: T) { return true }";
- * t.is(getFunctionName(fn), "isFn");
+ * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
  * ```
  */
 export function getFunctionName(line) {
-    let fn = line.split(" ")[2];
+    const parts = line.trim().split(" ");
+    const exports = parts[0] === "export";
+    let fn = exports ? parts[2] : parts[1];
     if (fn == null) {
         throw new Error(`function name couldnt be found for: ${line}`);
     }
@@ -26,12 +37,12 @@ export function getFunctionName(line) {
             fn = fn.split("(")[0];
         }
     }
-    return fn;
+    return { fn, exports };
 }
 /**
  * gets class name
  *
- * @doctest
+ * @doctest_only
  * ```js
  * let klass = "export class RequiredMap {";
  * t.is(getClassName(klass), "RequiredMap");
@@ -41,7 +52,7 @@ export function getFunctionName(line) {
  * ```
  */
 export function getClassName(line) {
-    let klass = line.split(" ")[2];
+    const klass = line.split(" ")[2];
     if (klass == null) {
         throw new Error(`class name couldnt be found for: ${line}`);
     }
@@ -84,7 +95,9 @@ export const then = (a, cb) => {
  *
  * @doctest
  * ```js
- * t.is(then(1, (n) => n + 1), 2)
+ * const arr = [1, 2];
+ * insertAt(arr, 1, 4);
+ * t.deepEqual(arr, [1, 4, 2]);
  * ```
  */
 export const insertAt = (arr, index, item) => {

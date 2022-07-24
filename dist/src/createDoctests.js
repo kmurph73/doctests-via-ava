@@ -5,6 +5,6 @@ import fg from "fast-glob";
 export const createDoctests = async (glob, opts) => {
     const files = await fg(glob);
     const groups = parseFiles(myCompact(files));
-    writeTests(groups, opts);
+    await writeTests(groups, opts);
 };
 //# sourceMappingURL=createDoctests.js.map

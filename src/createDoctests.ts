@@ -12,5 +12,5 @@ export const createDoctests = async (
   const files = await fg(glob);
 
   const groups = parseFiles(myCompact(files));
-  writeTests(groups, opts);
+  await writeTests(groups, opts);
 };

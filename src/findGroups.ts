@@ -7,6 +7,7 @@ const fnRegex = /^export (const|function)/;
 const classRegex = /^export class/;
 const jsTickRegex = /```js$/;
 const jsTickEndRegex = /```$/;
+const commentEndRegex = /\*\/$/;
 
 export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
   const groups: CodeGroup[] = [];
@@ -27,8 +28,8 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
         currentGroup.testStartEndLines[1] =
           index - currentGroup.startingLine - 1;
       } else if (fnRegex.test(line)) {
-        if (!GroupState.WithinCode) {
-          throw new Error("should be WithinCode at this point");
+        if (!GroupState.OutsideOfComment) {
+          throw new Error("should be OutsideOfComment at this point");
         }
 
         groups.push(currentGroup);
@@ -38,8 +39,8 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
         currentGroup.functionName = fn;
         currentGroup = null;
       } else if (classRegex.test(line)) {
-        if (!GroupState.WithinCode) {
-          throw new Error("should be WithinCode at this point");
+        if (!GroupState.OutsideOfComment) {
+          throw new Error("should be OutsideOfComment at this point");
         }
 
         groups.push(currentGroup);
@@ -48,6 +49,8 @@ export const findGroups = (lines: string[], fileName: string): CodeGroup[] => {
 
         currentGroup.className = klass;
         currentGroup = null;
+      } else if (commentEndRegex.test(line)) {
+        currentGroup.state = GroupState.OutsideOfComment;
       }
     } else if (doctestRegex.test(line)) {
       currentGroup = {
