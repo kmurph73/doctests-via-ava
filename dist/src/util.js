@@ -1,31 +1,31 @@
 /**
  * gets function name
  *
- * @doctest_only
+ * @doctest
  * ```js
  * let fn = "const isFn = () => true";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: false});
+ * t.is(getFunctionName(fn), "isFn");
  *
- * let fn = "export const isFn = () => true";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ * fn = "export const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
  *
  * fn = "export function isFn() { return true }";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ * t.is(getFunctionName(fn), "isFn");
  *
  * fn = "function isFn() { return true }";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: false});
+ * t.is(getFunctionName(fn), "isFn");
  *
  * fn = "export function isFn () { return true }";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ * t.is(getFunctionName(fn), "isFn");
  *
  * fn = "export function isFn<T>(a: T) { return true }";
- * t.is(getFunctionName(fn), {fn: "isFn", exports: true});
+ * t.is(getFunctionName(fn), "isFn");
  * ```
  */
 export function getFunctionName(line) {
     const parts = line.trim().split(" ");
-    const exports = parts[0] === "export";
-    let fn = exports ? parts[2] : parts[1];
+    const hasExport = parts[0] === "export";
+    let fn = hasExport ? parts[2] : parts[1];
     if (fn == null) {
         throw new Error(`function name couldnt be found for: ${line}`);
     }
@@ -37,22 +37,27 @@ export function getFunctionName(line) {
             fn = fn.split("(")[0];
         }
     }
-    return { fn, exports };
+    return fn;
 }
 /**
  * gets class name
  *
- * @doctest_only
+ * @doctest
  * ```js
  * let klass = "export class RequiredMap {";
  * t.is(getClassName(klass), "RequiredMap");
  *
  * klass = "export class RequiredMap<T> {";
  * t.is(getClassName(klass), "RequiredMap");
+ *
+ * klass = "class RequiredMap<T> {";
+ * t.is(getClassName(klass), "RequiredMap");
  * ```
  */
 export function getClassName(line) {
-    const klass = line.split(" ")[2];
+    const parts = line.trim().split(" ");
+    const hasExport = parts[0] === "export";
+    let klass = hasExport ? parts[2] : parts[1];
     if (klass == null) {
         throw new Error(`class name couldnt be found for: ${line}`);
     }

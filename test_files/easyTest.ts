@@ -161,7 +161,7 @@ export function isErrorResponse<T>(
 /**
  * gets function name
  *
- * @doctest_only
+ * @doctest
  * ```js
  * let fn = "const isFn = () => true";
  * t.is(getFunctionName(fn), "isFn");

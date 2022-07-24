@@ -1,9 +1,5 @@
 import fs from "fs";
-import util from "util";
 import { arrAt } from "./util.js";
-const rm = util.promisify(fs.rm);
-const mkdir = util.promisify(fs.mkdir);
-const writeFile = util.promisify(fs.writeFile);
 const cwd = process.cwd();
 const dir = cwd + "/doctests";
 const groupGroupsByFilename = (groups) => {
@@ -46,20 +42,20 @@ const createLines = (fullFileName, groups) => {
     const contents = importLine + "\n" + allLines.join("\n");
     return contents;
 };
-export const writeTests = async (allGroups, opts) => {
+export const writeTests = (allGroups, opts) => {
     const onlyGroups = allGroups.filter((g) => g.only);
     const hasOnly = onlyGroups.length > 0;
     const groups = hasOnly ? onlyGroups : allGroups;
     const grouped = groupGroupsByFilename(groups);
-    await rm(dir, { recursive: true, force: true });
-    await mkdir(dir);
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.mkdirSync(dir);
     for (const fullFileName in grouped) {
         const groups = grouped[fullFileName];
         const fileContents = createLines(fullFileName, groups);
         let file = arrAt(fullFileName.split("/"), -1);
         const ending = opts?.ts === true ? ".test.ts" : ".test.js";
         file = file.replace(/\.(js|ts)$/, ending);
-        await writeFile(dir + `/${file}`, fileContents);
+        fs.writeFileSync(dir + `/${file}`, fileContents);
     }
 };
 //# sourceMappingURL=writeTests.js.map

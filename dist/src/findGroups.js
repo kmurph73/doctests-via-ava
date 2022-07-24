@@ -23,20 +23,14 @@ export const findGroups = (lines, fileName) => {
                 currentGroup.testStartEndLines[1] =
                     index - currentGroup.startingLine - 1;
             }
-            else if (fnRegex.test(line)) {
-                if (!GroupState.OutsideOfComment) {
-                    throw new Error("should be OutsideOfComment at this point");
-                }
+            else if (GroupState.OutsideOfComment && fnRegex.test(line)) {
                 groups.push(currentGroup);
                 currentGroup.state = GroupState.Donezo;
                 const fn = getFunctionName(line);
                 currentGroup.functionName = fn;
                 currentGroup = null;
             }
-            else if (classRegex.test(line)) {
-                if (!GroupState.OutsideOfComment) {
-                    throw new Error("should be OutsideOfComment at this point");
-                }
+            else if (GroupState.OutsideOfComment && classRegex.test(line)) {
                 groups.push(currentGroup);
                 currentGroup.state = GroupState.Donezo;
                 const klass = getClassName(line);

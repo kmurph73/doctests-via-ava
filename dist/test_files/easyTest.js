@@ -138,7 +138,7 @@ export function isErrorResponse(json) {
 /**
  * gets function name
  *
- * @doctest_only
+ * @doctest
  * ```js
  * let fn = "const isFn = () => true";
  * t.is(getFunctionName(fn), "isFn");
