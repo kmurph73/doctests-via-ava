@@ -33,13 +33,13 @@ Next, add a script in your `package.json`:
 
 ```json
   "scripts": {
-    "doctest": "doctests-via-ava ./dist/src/**/*.js && ava test ./doctests/*.js"
+    "doctest": "doctests-via-ava \"./dist/src/**/*.js\" && ava test ./doctests/*.js"
    }
 ```
 
-We utilize the excellent [fast-glob](https://github.com/mrmlnc/fast-glob) library to find files w/ doctests.  What you pass into `doctests-via-ava` gets directly passed to fast-glob.
-
 Running `yarn doctest` (or the npm equivalent) will transform your doctests into regular ava tests, and then run them. Up to you whether to add `doctests` to `.gitignore` or not.
+
+We utilize the excellent [fast-glob](https://github.com/mrmlnc/fast-glob) library to find files w/ doctests.  What you pass into `doctests-via-ava` gets directly passed to fast-glob.  Be sure to wrap your glob in quotes (eg `doctests-via-ava "./src/*.js"`), since unix will turn certain globs into a list of files, which the cli does not expect.
 
 _All_ this lib does is transform your doctests into regular ava tests. As such, it can only doctest exported functions (since it needs to import them from the original source). It's also your responsibility to install ava.
 
@@ -67,7 +67,7 @@ If you're using something like create-react-app that's compiling your TS for you
 
 Then, pass in the `--ts` flag to the `doctests-via-ava` cli command:
 
-`doctests-via-ava ./src --ts && ava test ./doctests/*.ts`
+`doctests-via-ava "./src/**/*.ts" --ts && ava test ./doctests/*.ts`
 
 One gotcha is that [ts-node](https://github.com/TypeStrong/ts-node) wants you to add a `.js` ending to your imports, eg `import sortBy from 'lodash/sortBy.js';` - which CRA doesn't require (but is harmless to add), so you might see a `ERR_MODULE_NOT_FOUND` error if missing that in your files with doctests.
 
