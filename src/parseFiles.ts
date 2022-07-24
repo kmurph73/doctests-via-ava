@@ -10,7 +10,7 @@ export const parseFiles = (files: string[]): CodeGroup[] => {
 
     const code = fs.readFileSync(file, "utf8");
 
-    const allLines = code.split("\n").map((l) => l.trimRight());
+    const allLines = code.split("\n").map((l) => l.trimEnd());
 
     const groups = findGroups(allLines, file);
     allGroups.push(...groups);

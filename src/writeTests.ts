@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import { CodeGroup, DoctestOptions } from "./types.js";
 import { arrAt } from "./util.js";
 
@@ -65,12 +66,13 @@ const createLines = (fullFileName: string, groups: CodeGroup[]): string => {
   return contents;
 };
 
-export const writeTests = async (
+export const writeTests = (
   allGroups: CodeGroup[],
   opts?: DoctestOptions
-): Promise<void> => {
+): void => {
   const onlyGroups = allGroups.filter((g) => g.only);
-  const groups = onlyGroups.length ? onlyGroups : allGroups;
+  const hasOnly = onlyGroups.length > 0;
+  const groups = hasOnly ? onlyGroups : allGroups;
   const grouped = groupGroupsByFilename(groups);
 
   fs.rmSync(dir, { recursive: true, force: true });

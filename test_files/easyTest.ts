@@ -163,18 +163,29 @@ export function isErrorResponse<T>(
  *
  * @doctest
  * ```js
+ * let fn = "const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
+ *
  * let fn = "export const isFn = () => true";
  * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn() { return true }";
  * t.is(getFunctionName(fn), "isFn");
+ *
+ * fn = "function isFn() { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn () { return true }";
  * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn<T>(a: T) { return true }";
  * t.is(getFunctionName(fn), "isFn");
  * ```
  */
 export function getFunctionName(line: string): string {
-  let fn = line.split(" ")[2];
+  const parts = line.trim().split(" ");
+  let fn = parts[0] === "export" ? parts[2] : parts[1];
+
   if (fn == null) {
     throw new Error(`function name couldnt be found for: ${line}`);
   }

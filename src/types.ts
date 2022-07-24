@@ -1,6 +1,7 @@
 export enum GroupState {
   Begun,
   WithinCode,
+  OutsideOfComment,
   Donezo,
 }
 

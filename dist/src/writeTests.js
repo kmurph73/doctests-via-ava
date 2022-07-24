@@ -42,9 +42,10 @@ const createLines = (fullFileName, groups) => {
     const contents = importLine + "\n" + allLines.join("\n");
     return contents;
 };
-export const writeTests = async (allGroups, opts) => {
+export const writeTests = (allGroups, opts) => {
     const onlyGroups = allGroups.filter((g) => g.only);
-    const groups = onlyGroups.length ? onlyGroups : allGroups;
+    const hasOnly = onlyGroups.length > 0;
+    const groups = hasOnly ? onlyGroups : allGroups;
     const grouped = groupGroupsByFilename(groups);
     fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir);

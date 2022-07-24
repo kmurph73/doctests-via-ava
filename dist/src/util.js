@@ -3,18 +3,29 @@
  *
  * @doctest
  * ```js
- * let fn = "export const isFn = () => true";
+ * let fn = "const isFn = () => true";
  * t.is(getFunctionName(fn), "isFn");
+ *
+ * fn = "export const isFn = () => true";
+ * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn() { return true }";
  * t.is(getFunctionName(fn), "isFn");
+ *
+ * fn = "function isFn() { return true }";
+ * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn () { return true }";
  * t.is(getFunctionName(fn), "isFn");
+ *
  * fn = "export function isFn<T>(a: T) { return true }";
  * t.is(getFunctionName(fn), "isFn");
  * ```
  */
 export function getFunctionName(line) {
-    let fn = line.split(" ")[2];
+    const parts = line.trim().split(" ");
+    const hasExport = parts[0] === "export";
+    let fn = hasExport ? parts[2] : parts[1];
     if (fn == null) {
         throw new Error(`function name couldnt be found for: ${line}`);
     }
@@ -38,10 +49,15 @@ export function getFunctionName(line) {
  *
  * klass = "export class RequiredMap<T> {";
  * t.is(getClassName(klass), "RequiredMap");
+ *
+ * klass = "class RequiredMap<T> {";
+ * t.is(getClassName(klass), "RequiredMap");
  * ```
  */
 export function getClassName(line) {
-    let klass = line.split(" ")[2];
+    const parts = line.trim().split(" ");
+    const hasExport = parts[0] === "export";
+    let klass = hasExport ? parts[2] : parts[1];
     if (klass == null) {
         throw new Error(`class name couldnt be found for: ${line}`);
     }
@@ -84,7 +100,9 @@ export const then = (a, cb) => {
  *
  * @doctest
  * ```js
- * t.is(then(1, (n) => n + 1), 2)
+ * const arr = [1, 2];
+ * insertAt(arr, 1, 4);
+ * t.deepEqual(arr, [1, 4, 2]);
  * ```
  */
 export const insertAt = (arr, index, item) => {

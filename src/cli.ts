@@ -14,5 +14,5 @@ if (glob == null || glob.trim() === "") {
     `a third argument was passed in of ${tsOpt}, which should be "--ts", or nothing`
   );
 } else {
-  await createDoctests(glob);
+  createDoctests(glob);
 }
