@@ -9,6 +9,6 @@ else if (tsOpt != null && tsOpt !== "--ts") {
     console.error(`a third argument was passed in of ${tsOpt}, which should be "--ts", or nothing`);
 }
 else {
-    createDoctests(glob);
+    await createDoctests(glob);
 }
 //# sourceMappingURL=cli.js.map

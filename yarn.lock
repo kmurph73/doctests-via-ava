@@ -368,10 +368,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-doctests-via-ava@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/doctests-via-ava/-/doctests-via-ava-0.0.7.tgz#0801027755fd9d3db6368d7e67bb65251093e24a"
-  integrity sha512-h0/8hkx7C7XlLV1/31URbBquYuKNoOljeG0BMBbxlgrZ4xv8zbgE7fjjNhQPw0ZzICqDNtMqWZ2ToV++Bi+16Q==
+doctests-via-ava@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/doctests-via-ava/-/doctests-via-ava-0.0.9.tgz#2e98e0c85eb40b7346a8183dba9be488c13696d5"
+  integrity sha512-oij40xmpBJCXPPP3cfOG74L6tt8IA7FaTixhi0Fmt3mEuxxSiugT3XNSenypoLbDqxJMCzQKEV+wgHkZoJO5/Q==
   dependencies:
     fast-glob "^3.2.11"
     rimraf "^3.0.2"
